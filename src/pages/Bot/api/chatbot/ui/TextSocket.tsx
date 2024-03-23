@@ -1,7 +1,6 @@
 import { ClassicPreset } from "rete";
 import styled from "styled-components";
 import { $socketsize } from "./consts";
-import "../ui/ui.css";
 
 const Styles = styled.div`
   display: inline-block;
