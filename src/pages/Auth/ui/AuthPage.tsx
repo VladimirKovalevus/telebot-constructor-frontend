@@ -1,6 +1,6 @@
 import { AuthForm } from "@/features";
 
-const AuthPage = () => {
+const AuthPage: React.FC = () => {
   return (
     <>
       <AuthForm />

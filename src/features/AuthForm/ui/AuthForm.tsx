@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const AuthForm = () => {
+const AuthForm: React.FC = () => {
   const navigate = useNavigate();
 
   const [register, setRegister] = useState(true);

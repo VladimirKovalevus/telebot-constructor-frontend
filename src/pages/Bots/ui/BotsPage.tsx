@@ -1,6 +1,6 @@
 import { BotItem } from "@/entities";
 
-const BotsPage = () => {
+const BotsPage: React.FC = () => {
   const Bots = [
     {
       id: 1,

@@ -1,4 +1,4 @@
-const ErrorPage = () => {
+const ErrorPage: React.FC = () => {
   return (
     <>
       <div className="flex h-screen w-screen items-center justify-center">
