@@ -36,6 +36,8 @@ import { CustomNodeComponent } from "./chatbot/ui/CustomNode";
 import { getConnectionSockets } from "./chatbot/utils";
 import { addCustomBackground } from "./chatbot/ui/background";
 import * as ContextMenuComponents from "./chatbot/ui/context-menu";
+import { Id } from "node_modules/@reduxjs/toolkit/dist/tsHelpers";
+import { combineSlices } from "@reduxjs/toolkit";
 
 type AreaExtra = ReactArea2D<never> | ContextMenuExtra;
 
@@ -154,7 +156,6 @@ export async function createEditor(
               target.key as never,
             ),
           );
-          console.log(sockets);
 
           if (!sockets.source.isCompatibleWith(sockets.target)) {
             log("Sockets are not compatible", "error");
@@ -208,13 +209,6 @@ export async function createEditor(
 
   addCustomBackground(area);
 
-  const onMessage = new OnMessage();
-  const match = new MatchMessage(".*hello.*", dataflow);
-  const message1 = new Message("Hello!");
-  const message2 = new Message("ッ");
-  const send1 = new SendMessage(dataflow, respond);
-  const send2 = new SendMessage(dataflow, respond);
-
   const chat = new DebugChat((message) => {
     area.update("node", chat.id);
     if (message.own) {
@@ -230,12 +224,12 @@ export async function createEditor(
     }
   });
 
-  const con1 = new Connection(onMessage, "exec", match, "exec");
-  const con2 = new Connection(onMessage, "text", match, "text");
-  const con3 = new Connection(message1, "text", send1, "text");
-  const con4 = new Connection(message2, "text", send2, "text");
-  const con5 = new Connection(match, "consequent", send1, "exec");
-  const con6 = new Connection(match, "alternate", send2, "exec");
+  const onMessage = new OnMessage();
+  const match = new MatchMessage(".*hello.*", dataflow);
+  const message1 = new Message("Hello!");
+  const message2 = new Message("ッ");
+  const send1 = new SendMessage(dataflow, respond);
+  const send2 = new SendMessage(dataflow, respond);
 
   await editor.addNode(onMessage);
   await editor.addNode(match);
@@ -245,6 +239,13 @@ export async function createEditor(
   await editor.addNode(send2);
   await editor.addNode(chat);
 
+  const con1 = new Connection(onMessage, "exec", match, "exec");
+  const con2 = new Connection(onMessage, "text", match, "text");
+  const con3 = new Connection(message1, "text", send1, "text");
+  const con4 = new Connection(message2, "text", send2, "text");
+  const con5 = new Connection(match, "consequent", send1, "exec");
+  const con6 = new Connection(match, "alternate", send2, "exec");
+
   await editor.addConnection(con1);
   await editor.addConnection(con2);
   await editor.addConnection(con3);
@@ -252,21 +253,127 @@ export async function createEditor(
   await editor.addConnection(con5);
   await editor.addConnection(con6);
 
+  const Export = () => {
+    const dataNodes = {
+      nodes: [] as {
+        id: string;
+        label: string;
+        controls: any;
+        inputs: any;
+        outputs: any;
+        height: number;
+        width: number;
+      }[],
+    };
+
+    const dataConnections = {
+      connections: [] as {
+        id: string;
+        source: string;
+        sourceOutput: string;
+        target: string;
+        targetInput: string;
+      }[],
+    };
+
+    const nodes = editor.getNodes();
+    const connections = editor.getConnections();
+
+    for (const node of nodes) {
+      dataNodes.nodes.push({
+        id: node.id,
+        label: node.label,
+        controls: node.controls,
+        inputs: node.inputs,
+        outputs: node.outputs,
+        height: node.height,
+        width: node.width,
+      });
+    }
+
+    for (const connection of connections) {
+      dataConnections.connections.push({
+        id: connection.id,
+        source: connection.source,
+        sourceOutput: connection.sourceOutput,
+        target: connection.target,
+        targetInput: connection.targetInput,
+      });
+    }
+
+    if (dataNodes.nodes.length > 0) {
+      localStorage.setItem("nodes", JSON.stringify(dataNodes));
+    }
+
+    if (dataConnections.connections.length > 0) {
+      localStorage.setItem("connections", JSON.stringify(dataConnections));
+    }
+  };
+
+  const Import = async () => {
+    const dataNodes = JSON.parse(localStorage.getItem("nodes") || "");
+    // const dataConnections = JSON.parse(
+    //   localStorage.getItem("connections") || "",
+    // );
+
+    if (dataNodes) {
+      for (const node of dataNodes.nodes) {
+        if (node.label == "On message") {
+          const onMessage = new OnMessage();
+          await editor.addNode(onMessage);
+        }
+
+        if (node.label == "Match message") {
+          const match = new MatchMessage(node.controls.regexp.value, dataflow);
+          await editor.addNode(match);
+        }
+
+        if (node.label == "Message") {
+          const message = new Message(node.controls.value.value);
+          await editor.addNode(message);
+        }
+
+        if (node.label == "Send message") {
+          const send = new SendMessage(dataflow, respond);
+          await editor.addNode(send);
+        }
+
+        // for (const connection of dataConnections.connections) {
+        //   const from = editor.getNode(connection.source);
+        //   const sourceOutput = connection.sourceOutput;
+        //   const to = editor.getNode(connection.target);
+        //   const targetInput = connection.targetInput;
+
+        //   if (from && to) {
+        //     editor.addConnection(
+        //       new Connection(
+        //         from,
+        //         sourceOutput as never,
+        //         to,
+        //         targetInput as never,
+        //       ),
+        //     );
+        //   }
+        // }
+      }
+    }
+  };
+
+  if (editor) {
+    Export();
+    Import();
+  }
+
   await arrange.layout();
-  console.log(editor.getNodes());
-  console.log(editor.getConnections());
-  console.log(connection);
   await area.translate(chat.id, { x: 1000, y: 500 });
 
-  AreaExtensions.zoomAt(area, editor.getNodes());
-
-  chat.botSend(
-    "Hello there! I'm a chatbot based on visual programming and built using the Rete.js framework",
-  );
-  chat.botSend("btw, check out the [Rete.js website](https://retejs.org)");
-  chat.botSend(
-    "Additionally, you have the option to back my creator [on Patreon](https://www.patreon.com/bePatron?u=7890937)",
-  );
+  // chat.botSend(
+  //   "Hello there! I'm a chatbot based on visual programming and built using the Rete.js framework",
+  // );
+  // chat.botSend("btw, check out the [Rete.js website](https://retejs.org)");
+  // chat.botSend(
+  //   "Additionally, you have the option to back my creator [on Patreon](https://www.patreon.com/bePatron?u=7890937)",
+  // );
 
   return {
     destroy: () => area.destroy(),

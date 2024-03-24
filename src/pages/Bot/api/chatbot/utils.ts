@@ -8,7 +8,7 @@ type Output = ClassicPreset.Output<Sockets>;
 
 export function getConnectionSockets(
   editor: NodeEditor<Schemes>,
-  connection: Schemes["Connection"]
+  connection: Schemes["Connection"],
 ) {
   const source = editor.getNode(connection.source);
   const target = editor.getNode(connection.target);
@@ -21,6 +21,6 @@ export function getConnectionSockets(
 
   return {
     source: output?.socket,
-    target: input?.socket
+    target: input?.socket,
   };
 }

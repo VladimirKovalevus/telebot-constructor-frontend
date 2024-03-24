@@ -8,6 +8,10 @@ export type MessageModel = {
 };
 
 export class DebugChat extends ClassicPreset.Node<{}, {}, {}> {
+  chat(id: string, arg1: { x: number; y: number }) {
+    throw new Error("Method not implemented.");
+  }
+
   width = 400;
   height = 650;
 

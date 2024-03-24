@@ -14,7 +14,7 @@ export class OnMessage extends ClassicPreset.Node<
     super("On message");
     this.addOutput(
       "exec",
-      new ClassicPreset.Output(new ActionSocket(), "Exec")
+      new ClassicPreset.Output(new ActionSocket(), "Exec"),
     );
     this.addOutput("text", new ClassicPreset.Output(new TextSocket(), "Text"));
   }
@@ -25,7 +25,7 @@ export class OnMessage extends ClassicPreset.Node<
 
   data() {
     return {
-      text: this.inputMessage || ""
+      text: this.inputMessage || "",
     };
   }
 }

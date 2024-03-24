@@ -3,7 +3,7 @@ import { AreaPlugin } from "rete-area-plugin";
 import "./background.css";
 
 export function addCustomBackground<S extends BaseSchemes, K>(
-  area: AreaPlugin<S, K>
+  area: AreaPlugin<S, K>,
 ) {
   const background = document.createElement("div");
 

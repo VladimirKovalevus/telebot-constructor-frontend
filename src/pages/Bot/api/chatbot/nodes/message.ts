@@ -13,7 +13,7 @@ export class Message extends ClassicPreset.Node<
     super("Message");
     this.addControl(
       "value",
-      new ClassicPreset.InputControl("text", { initial })
+      new ClassicPreset.InputControl("text", { initial }),
     );
     this.addOutput("text", new ClassicPreset.Output(new TextSocket(), "Text"));
   }
@@ -22,7 +22,7 @@ export class Message extends ClassicPreset.Node<
 
   data() {
     return {
-      text: this.controls.value.value || ""
+      text: this.controls.value.value || "",
     };
   }
 }

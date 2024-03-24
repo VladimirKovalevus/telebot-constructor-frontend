@@ -14,7 +14,7 @@ render.addPreset(
       item: () => CustomItem,
       common: () => Common,
       search: () => Search,
-      subitems: () => Subitems
-    }
-  })
+      subitems: () => Subitems,
+    },
+  }),
 );

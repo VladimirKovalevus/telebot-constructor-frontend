@@ -13,12 +13,12 @@ export class SendMessage extends ClassicPreset.Node<
 
   constructor(
     private dataflow: DataflowEngine<Schemes>,
-    private respond: (text: string) => void
+    private respond: (text: string) => void,
   ) {
     super("Send message");
     this.addInput(
       "exec",
-      new ClassicPreset.Input(new ActionSocket(), "Action")
+      new ClassicPreset.Input(new ActionSocket(), "Action"),
     );
     this.addInput("text", new ClassicPreset.Input(new TextSocket(), "Text"));
   }

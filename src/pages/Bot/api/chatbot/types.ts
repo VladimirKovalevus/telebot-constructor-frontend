@@ -5,7 +5,7 @@ import {
   Message,
   OnMessage,
   MatchMessage,
-  SendMessage
+  SendMessage,
 } from "./nodes";
 
 export type NodeProps =
