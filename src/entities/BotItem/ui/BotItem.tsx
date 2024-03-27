@@ -51,8 +51,13 @@ const BotList = ({ id, name, description }: IBotList) => {
           ></Link>
         </div>
       </div>
-      <div className="collapse-content">
+      <div className="collapse-content flex flex-col gap-3">
         <p>{description}</p>
+        <input
+          type="text"
+          placeholder="API key"
+          className="input input-bordered w-full max-w-xs"
+        />
       </div>
     </div>
   );
