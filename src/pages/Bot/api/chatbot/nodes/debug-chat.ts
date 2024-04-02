@@ -7,7 +7,7 @@ export type MessageModel = {
   own: boolean;
 };
 
-export class DebugChat extends ClassicPreset.Node<{}, {}, {}> {
+export class DebugChat extends ClassicPreset.Node<object, object, object> {
   chat(id: string, arg1: { x: number; y: number }) {
     throw new Error("Method not implemented.");
   }

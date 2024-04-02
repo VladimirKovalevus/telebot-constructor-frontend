@@ -19,3 +19,13 @@ export class TextSocket extends ClassicPreset.Socket {
     return socket instanceof TextSocket;
   }
 }
+
+export class UserSocket extends ClassicPreset.Socket {
+  constructor() {
+    super("User");
+  }
+
+  isCompatibleWith(socket: ClassicPreset.Socket) {
+    return socket instanceof UserSocket;
+  }
+}

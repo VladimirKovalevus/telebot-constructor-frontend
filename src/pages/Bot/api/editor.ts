@@ -36,8 +36,6 @@ import { CustomNodeComponent } from "./chatbot/ui/CustomNode";
 import { getConnectionSockets } from "./chatbot/utils";
 import { addCustomBackground } from "./chatbot/ui/background";
 import * as ContextMenuComponents from "./chatbot/ui/context-menu";
-import { Id } from "node_modules/@reduxjs/toolkit/dist/tsHelpers";
-import { combineSlices } from "@reduxjs/toolkit";
 
 type AreaExtra = ReactArea2D<never> | ContextMenuExtra;
 

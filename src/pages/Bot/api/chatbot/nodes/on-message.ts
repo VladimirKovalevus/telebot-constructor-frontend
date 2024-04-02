@@ -1,14 +1,19 @@
 import { ClassicPreset } from "rete";
-import { ActionSocket, TextSocket } from "../sockets";
+import { ActionSocket, TextSocket, UserSocket } from "../sockets";
 
 export class OnMessage extends ClassicPreset.Node<
-  {},
-  { exec: ClassicPreset.Socket; text: ClassicPreset.Socket },
-  {}
+  object,
+  {
+    exec: ClassicPreset.Socket;
+    text: ClassicPreset.Socket;
+    user: ClassicPreset.Socket;
+  },
+  object
 > {
   width = 180;
-  height = 135;
+  height = 100 + "%";
   inputMessage?: string;
+  userId?: number;
 
   constructor() {
     super("On message");
@@ -17,6 +22,7 @@ export class OnMessage extends ClassicPreset.Node<
       new ClassicPreset.Output(new ActionSocket(), "Exec"),
     );
     this.addOutput("text", new ClassicPreset.Output(new TextSocket(), "Text"));
+    this.addOutput("user", new ClassicPreset.Output(new UserSocket(), "User"));
   }
 
   execute(_: never, forward: (output: "exec") => void) {
@@ -26,6 +32,7 @@ export class OnMessage extends ClassicPreset.Node<
   data() {
     return {
       text: this.inputMessage || "",
+      user: this.userId || 0,
     };
   }
 }

@@ -3,6 +3,7 @@ import { message } from "antd";
 import { useRete } from "rete-react-plugin";
 import { createEditor } from "../api/editor";
 import Menu from "./Menu";
+import "./style.css";
 
 const BotPage: React.FC = () => {
   const [messageApi, contextHolder] = message.useMessage();

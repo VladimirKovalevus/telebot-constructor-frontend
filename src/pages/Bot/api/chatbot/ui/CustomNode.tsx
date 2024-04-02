@@ -4,9 +4,11 @@ import { $fontfamily } from "./consts";
 
 const styles = css<{ selected?: boolean }>`
   background: #191c46dd;
+  padding: 0px;
   border: 5px #cfc7ff solid;
   border-radius: 25px;
   transition: background 0.4s;
+
   .title {
     color: white;
     text-align: center;
@@ -16,19 +18,29 @@ const styles = css<{ selected?: boolean }>`
     font-weight: 100;
     font-size: 1.2em;
   }
+
   &:hover {
     background: #191c46;
   }
+
   .input-title,
   .output-title {
     font-weight: 100;
     font-family: ${$fontfamily};
   }
+
   .output-socket {
     margin-right: -1px;
   }
+
   .input-socket {
     margin-left: -1px;
+  }
+
+  .input {
+    display: flex;
+    align-items: center;
+    background-color: transparent !important;
   }
   ${(props) =>
     props.selected &&

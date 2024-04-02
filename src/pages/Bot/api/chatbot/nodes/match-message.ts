@@ -9,7 +9,7 @@ export class MatchMessage extends ClassicPreset.Node<
   { regexp: ClassicPreset.InputControl<"text"> }
 > {
   width = 180;
-  height = 245;
+  height = 100 + "%";
 
   constructor(
     initial: string,

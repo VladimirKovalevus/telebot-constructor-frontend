@@ -5,11 +5,11 @@ import { Schemes } from "../types";
 
 export class SendMessage extends ClassicPreset.Node<
   { exec: ClassicPreset.Socket; text: ClassicPreset.Socket },
-  {},
-  {}
+  object,
+  object
 > {
   width = 180;
-  height = 135;
+  height = 100 + "%";
 
   constructor(
     private dataflow: DataflowEngine<Schemes>,

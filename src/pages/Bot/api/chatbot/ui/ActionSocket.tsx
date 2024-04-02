@@ -14,9 +14,11 @@ const Styles = styled.div`
   margin: 0.1em 0.7em;
   z-index: 2;
   box-sizing: border-box;
+
   &:hover {
     border-width: 4px;
   }
+
   &.multiple {
     border-color: yellow;
   }

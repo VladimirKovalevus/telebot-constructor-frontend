@@ -2,7 +2,7 @@ import { ClassicPreset } from "rete";
 import { TextSocket } from "../sockets";
 
 export class Message extends ClassicPreset.Node<
-  {},
+  object,
   { text: ClassicPreset.Socket },
   { value: ClassicPreset.InputControl<"text"> }
 > {

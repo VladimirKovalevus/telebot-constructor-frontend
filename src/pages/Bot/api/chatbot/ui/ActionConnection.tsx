@@ -8,6 +8,7 @@ const styles = css`
   stroke-dasharray: 10 5;
   animation: dash 1s linear infinite;
   stroke-dashoffset: 45;
+
   @keyframes dash {
     to {
       stroke-dashoffset: 0;
