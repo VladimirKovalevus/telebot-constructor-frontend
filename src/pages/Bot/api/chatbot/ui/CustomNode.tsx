@@ -3,24 +3,25 @@ import { css } from "styled-components";
 import { $fontfamily } from "./consts";
 
 const styles = css<{ selected?: boolean }>`
-  background: #191c46dd;
+  background: #39393add;
   padding: 0px;
-  border: 5px #cfc7ff solid;
+  border: 5px #ffffffc4 solid;
   border-radius: 25px;
-  transition: background 0.4s;
+  transition: all 0.4s;
 
   .title {
     color: white;
     text-align: center;
     border-radius: 20px 20px 0 0;
-    border-bottom: 5px #cfc7ff solid;
+    border-bottom: 5px #ffffffc4 solid;
     font-family: ${$fontfamily};
     font-weight: 100;
     font-size: 1.2em;
+    transition: all 0.4s;
   }
 
   &:hover {
-    background: #191c46;
+    background: #6b6b6e;
   }
 
   .input-title,
@@ -45,9 +46,9 @@ const styles = css<{ selected?: boolean }>`
   ${(props) =>
     props.selected &&
     css`
-      border-color: #ff0000c4;
+      border-color: #2c2b2bc4;
       .title {
-        border-color: #ff0000c4;
+        border-color: #2c2b2bc4;
       }
     `}
 `;

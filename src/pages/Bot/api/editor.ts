@@ -10,6 +10,7 @@ import { ReactPlugin, Presets, ReactArea2D } from "rete-react-plugin";
 import {
   AutoArrangePlugin,
   Presets as ArrangePresets,
+  ExpectedSchemes,
 } from "rete-auto-arrange-plugin";
 import { DataflowEngine, ControlFlowEngine } from "rete-engine";
 import {
@@ -24,7 +25,7 @@ import {
   MatchMessage,
   SendMessage,
 } from "./chatbot/nodes";
-import { ActionSocket, TextSocket } from "./chatbot/sockets";
+import { ActionSocket, TextSocket, UserSocket } from "./chatbot/sockets";
 import { Schemes } from "./chatbot/types";
 import { Connection } from "./chatbot/connection";
 import { ActionSocketComponent } from "./chatbot/ui/ActionSocket";
@@ -36,6 +37,7 @@ import { CustomNodeComponent } from "./chatbot/ui/CustomNode";
 import { getConnectionSockets } from "./chatbot/utils";
 import { addCustomBackground } from "./chatbot/ui/background";
 import * as ContextMenuComponents from "./chatbot/ui/context-menu";
+import { UserSocketComponent } from "./chatbot/ui/UserSocket";
 
 type AreaExtra = ReactArea2D<never> | ContextMenuExtra;
 
@@ -47,7 +49,8 @@ export async function createEditor(
   const area = new AreaPlugin<Schemes, AreaExtra>(container);
   const connection = new ConnectionPlugin<Schemes, AreaExtra>();
   const render = new ReactPlugin<Schemes, AreaExtra>({ createRoot });
-  const arrange = new AutoArrangePlugin<Schemes, AreaExtra>();
+  const arrange: AutoArrangePlugin<ExpectedSchemes, AreaExtra> =
+    new AutoArrangePlugin<ExpectedSchemes, AreaExtra>();
   const dataflow = new DataflowEngine<Schemes>(({ inputs, outputs }) => {
     return {
       inputs: () =>
@@ -122,6 +125,9 @@ export async function createEditor(
           }
           if (data.payload instanceof TextSocket) {
             return TextSocketComponent;
+          }
+          if (data.payload instanceof UserSocket) {
+            return UserSocketComponent;
           }
           return Presets.classic.Socket;
         },
@@ -259,7 +265,7 @@ export async function createEditor(
         controls: any;
         inputs: any;
         outputs: any;
-        height: number;
+        height: number | string;
         width: number;
       }[],
     };

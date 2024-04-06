@@ -8,7 +8,6 @@ import ReactMarkdown from "react-markdown";
 type NodeExtraData = { width?: number; height?: number };
 
 export const NodeStyles = styled.div<NodeExtraData & { selected: boolean }>`
-  border: 5px #cfc7ff solid;
   border-radius: 10px;
   cursor: pointer;
   box-sizing: border-box;
@@ -16,12 +15,12 @@ export const NodeStyles = styled.div<NodeExtraData & { selected: boolean }>`
     Number.isFinite(props.width) ? `${props.width}px` : `180px`};
   height: ${(props) =>
     Number.isFinite(props.height) ? `${props.height}px` : "auto"};
-  /* padding: 1em 0.5em 0.5em 0.5em; */
   position: relative;
   user-select: none;
   line-height: initial;
   font-family: Arial;
   position: relative;
+
   ${(props) =>
     props.selected &&
     css`
@@ -40,17 +39,19 @@ const HandleArea = styled.div`
   justify-content: center;
   cursor: grabbing;
 `;
+
 const Handle = styled(Button)`
-  cursor: grab;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
   z-index: 1;
+  cursor: grab;
+
   :active {
     cursor: grabbing;
   }
 `;
 
 const ChatLayout = styled(Layout)`
-  background-image: url("https://64.media.tumblr.com/913fc95846350c30232a5608a322b78e/tumblr_obykzyjxZt1vbllj8o4_1280.png");
+  background: #6b6b6e;
   background-size: cover;
   border-radius: 0.5em;
   height: 100%;
@@ -62,23 +63,21 @@ const MessagesLayout = styled(Layout)`
   background: transparent;
   padding: 2em 1em;
   overflow: auto;
+
   ::-webkit-scrollbar {
     width: 10px;
   }
 
-  /* Track */
   ::-webkit-scrollbar-track {
     background: transparent;
     border-radius: 1em;
   }
 
-  /* Handle */
   ::-webkit-scrollbar-thumb {
     background: rgba(150, 150, 150, 0.3);
     border-radius: 1em;
   }
 
-  /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
     background: #555;
   }
@@ -88,8 +87,19 @@ const ChatMessage = styled(List.Item)`
   width: 80%;
   min-width: 10em;
   border-block-end: unset !important;
+
   p {
     margin: 0;
+  }
+`;
+
+const ChatButton = styled(Button)`
+  padding: 0em 2em;
+  height: 100%;
+  border-color: #d9d9d9 !important;
+
+  :hover {
+    background-color: #d9d9d9 !important;
   }
 `;
 
@@ -103,8 +113,8 @@ function Message(props: { avatar: string; message: string; own: boolean }) {
             style={
               props.own
                 ? {
-                    background: "#1677ff",
-                    borderColor: "#1677ff",
+                    background: "#ffffff66",
+                    borderColor: "#ffffff66",
                     color: "white",
                   }
                 : {}
@@ -182,17 +192,12 @@ export function ChatNodeComponent(props: Props) {
               onInput={(e) => setText((e.target as HTMLInputElement).value)}
               placeholder="Your message..."
             />
-            <Button
+            <ChatButton
               onClick={() => {
                 props.data.userSend(text);
                 setText("");
               }}
-              size="large"
-              style={{ fontSize: "1.5em", height: "2em" }}
-              type="primary"
-            >
-              Send
-            </Button>
+            ></ChatButton>
           </TextBox>
         </ChatLayout>
       </Drag.NoDrag>
