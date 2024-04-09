@@ -26,8 +26,5 @@ const Styles = styled.div`
 export function UserSocketComponent<T extends ClassicPreset.Socket>(props: {
   data: T;
 }) {
-  return (
-    <Styles title={props.data.name} />
-    // <div className="text-socket">{props.data.name}</div>
-  );
+  return <Styles title={props.data.name} />;
 }
