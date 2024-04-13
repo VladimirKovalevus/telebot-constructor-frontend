@@ -22,8 +22,10 @@ import {
   DebugChat,
   Message,
   OnMessage,
+  OnCommand,
   MatchMessage,
   SendMessage,
+  Timer,
 } from "./chatbot/nodes";
 import { ActionSocket, TextSocket, UserSocket } from "./chatbot/sockets";
 import { Schemes } from "./chatbot/types";
@@ -82,10 +84,12 @@ export async function createEditor(
   }
   const contextMenu = new ContextMenuPlugin<Schemes>({
     items: ContextMenuPresets.classic.setup([
-      ["On message", () => new OnMessage()],
-      ["Message", () => new Message("")],
       ["Match message", () => new MatchMessage("", dataflow)],
+      ["Message", () => new Message("")],
+      ["On command", () => new OnCommand("", dataflow)],
+      ["On message", () => new OnMessage()],
       ["Send message", () => new SendMessage(dataflow, respond)],
+      ["Timer", () => new Timer("0", dataflow)],
     ]),
   });
   area.use(contextMenu);
