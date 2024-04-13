@@ -1,10 +1,14 @@
 import { ClassicPreset } from "rete";
 import { DataflowEngine } from "rete-engine";
-import { ActionSocket, TextSocket } from "../sockets";
+import { ActionSocket, TextSocket, UserSocket } from "../sockets";
 import { Schemes } from "../types";
 
 export class MatchMessage extends ClassicPreset.Node<
-  { exec: ClassicPreset.Socket; text: ClassicPreset.Socket },
+  {
+    exec: ClassicPreset.Socket;
+    text: ClassicPreset.Socket;
+    user: ClassicPreset.Socket;
+  },
   { consequent: ClassicPreset.Socket; alternate: ClassicPreset.Socket },
   { regexp: ClassicPreset.InputControl<"text"> }
 > {
@@ -21,6 +25,7 @@ export class MatchMessage extends ClassicPreset.Node<
       new ClassicPreset.Input(new ActionSocket(), "Action"),
     );
     this.addInput("text", new ClassicPreset.Input(new TextSocket(), "Text"));
+    this.addInput("user", new ClassicPreset.Input(new UserSocket(), "User"));
     this.addControl(
       "regexp",
       new ClassicPreset.InputControl("text", { initial }),
