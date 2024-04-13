@@ -2,21 +2,26 @@ import { GetSchemes } from "rete";
 import { Connection } from "./connection";
 import {
   DebugChat,
-  Message,
-  OnMessage,
   MatchMessage,
+  Message,
+  OnCommand,
+  OnMessage,
   SendMessage,
+  Timer,
 } from "./nodes";
 
 export type NodeProps =
   | DebugChat
-  | Message
-  | OnMessage
   | MatchMessage
-  | SendMessage;
+  | Message
+  | OnCommand
+  | OnMessage
+  | SendMessage
+  | Timer;
 export type ConnProps =
+  | Connection<OnMessage, MatchMessage>
   | Connection<Message, SendMessage>
   | Connection<MatchMessage, SendMessage>
-  | Connection<OnMessage, MatchMessage>;
+  | Connection<OnCommand, SendMessage>;
 
 export type Schemes = GetSchemes<NodeProps, ConnProps>;
