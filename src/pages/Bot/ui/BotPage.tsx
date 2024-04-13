@@ -3,7 +3,6 @@ import { message } from "antd";
 import { useRete } from "rete-react-plugin";
 import { createEditor } from "../api/editor";
 import Menu from "./Menu";
-import Save from "./Save";
 import "./style.css";
 
 const BotPage: React.FC = () => {
@@ -22,7 +21,6 @@ const BotPage: React.FC = () => {
         {contextHolder}
         <div ref={ref} style={{ height: "100vh", width: "100vw" }}></div>
         <Menu />
-        <Save />
       </div>
     </>
   );
