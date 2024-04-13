@@ -140,6 +140,7 @@ const TextBox = styled(Space.Compact)`
 type Props = {
   data: DebugChat & NodeExtraData;
 };
+
 export type NodeComponent = (props: Props) => JSX.Element;
 
 export function ChatNodeComponent(props: Props) {

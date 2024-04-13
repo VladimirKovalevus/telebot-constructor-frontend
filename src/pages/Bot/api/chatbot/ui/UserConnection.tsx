@@ -4,7 +4,7 @@ import { ClassicScheme, Presets } from "rete-react-plugin";
 const { Connection } = Presets.classic;
 
 const styles = css`
-  stroke: #0d29cab8;
+  stroke: #ffffff66;
 `;
 
 export function UserConnectionComponent(props: {

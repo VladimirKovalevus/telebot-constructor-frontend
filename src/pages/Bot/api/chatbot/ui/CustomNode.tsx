@@ -43,6 +43,7 @@ const styles = css<{ selected?: boolean }>`
     align-items: center;
     background-color: transparent !important;
   }
+
   ${(props) =>
     props.selected &&
     css`
